@@ -5,36 +5,44 @@ using UnityEngine;
 public class PShoot : MonoBehaviour {
 
     [SerializeField]
-    float laserSpeed;
+    private float _laserSpeed;
 
-    public GameObject laserSpawn;
+    [SerializeField]
+    private GameObject _laserSpawn;
 
-	// Use this for initialization
-	void Start ()
+    [SerializeField]
+    private float _fireRate;
+    private float _nextFire;
+
+    // Use this for initialization
+    private void Start ()
     {
-        laserSpeed = 10;
+        _laserSpeed = 10;
 		
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	private void Update ()
     {
         PlayerShoot();
 	}
 
-    void PlayerShoot ()
+    private void PlayerShoot ()
     {
         //if player presses space, instantiate laser at position above player
         //have lazer travelling at set speed
+        //sets firerate - adds fireRate to Time.time, then checks if the new amount of time has passed
+        //before allowing for firing again.
 
         Vector3 spawnPos = transform.position + new Vector3(0, 0.88f, 0);
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && Time.time > _nextFire || Input.GetMouseButton(0) && Time.time > _nextFire)
         {
             //spawn laserCopy
+            _nextFire = Time.time + _fireRate;
 
-            GameObject lFinal = Instantiate(laserSpawn, spawnPos, Quaternion.identity);
-            lFinal.GetComponent<Rigidbody2D>().velocity = new Vector3(0, laserSpeed, 0);
+            GameObject lFinal = Instantiate(_laserSpawn, spawnPos, Quaternion.identity);
+            lFinal.GetComponent<Rigidbody2D>().velocity = new Vector3(0, _laserSpeed, 0);
         }
       
     }

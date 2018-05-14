@@ -8,16 +8,16 @@ public class Player : MonoBehaviour {
     Rigidbody2D rb;
 
     [SerializeField]
-    float speed = 5;
+    private float _speed = 5;
   
 	// Use this for initialization
-	void Start ()
+	private void Start ()
     {
         transform.position = new Vector3(0, 0, 0);
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	private void Update ()
     {
 
         //calls input
@@ -27,9 +27,9 @@ public class Player : MonoBehaviour {
         PlayerBounds();
     }
 
-    void AlternativeMovement ()
+    private void AlternativeMovement ()
     {
-        var deltaPosition = speed * Time.deltaTime;
+        var deltaPosition = _speed * Time.deltaTime;
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -38,11 +38,12 @@ public class Player : MonoBehaviour {
         transform.Translate(Vector3.up * deltaPosition * v);
     } 
 
-    void PlayerBounds ()
+    private void PlayerBounds ()
     {
         float verticalBoundary = 4;
         float horizontalBoundary = 9.2f;
 
+        /*
         if (transform.position.x >= verticalBoundary)
         {
             //wrap left
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour {
         {
             //wrap right
         }
+        */
 
         if (transform.position.y > verticalBoundary - 1f)
         {
@@ -73,29 +75,6 @@ public class Player : MonoBehaviour {
     
 
     }
-
-    /*
-    //GetAxis input
-    void PInput ()
-    {
-        var deltaPosition = speed * Time.deltaTime;
-
-        //GetAxis is a float value attached to keyboard inputs.
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-
-        var axisForce = new Vector2(h, v);
-
-        //Add movement capability into MovementForce function * speed
-        MovementForce(axisForce * deltaPosition);
-    }
-
-    void MovementForce (Vector2 speedInput)
-    {
-        //moves object via axisForce vector input in speedInput
-        transform.Translate(speedInput);
-    }
-    */
 
     
 }
