@@ -43,16 +43,6 @@ public class Player : MonoBehaviour {
         float verticalBoundary = 4;
         float horizontalBoundary = 9.2f;
 
-        /*
-        if (transform.position.x >= verticalBoundary)
-        {
-            //wrap left
-        }
-        else if (transform.position.x <= -verticalBoundary)
-        {
-            //wrap right
-        }
-        */
 
         if (transform.position.y > verticalBoundary - 1f)
         {
@@ -72,9 +62,9 @@ public class Player : MonoBehaviour {
             transform.position = new Vector3(9, transform.position.y, 0);
         }
 
-    
-
     }
+
+    
 
     
 }

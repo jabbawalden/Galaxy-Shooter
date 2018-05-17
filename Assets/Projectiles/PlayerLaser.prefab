@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4529741866940998}
+  - component: {fileID: 50575163011074932}
   - component: {fileID: 212710225425958878}
   - component: {fileID: 61180096297501054}
-  - component: {fileID: 50575163011074932}
   - component: {fileID: 114580342003064682}
   m_Layer: 0
   m_Name: PlayerLaser
