@@ -6,7 +6,8 @@ public class PowerUp : MonoBehaviour {
 
     [SerializeField]
     float speed;
-   
+    [SerializeField]
+    private int powerupID; //0 = Tripple, 1 = speed boost, 2 = shield
 
 	// Use this for initialization
 	void Start ()
@@ -25,10 +26,25 @@ public class PowerUp : MonoBehaviour {
         if (collision.tag == "Player")
         {
             PShoot player = collision.GetComponent<PShoot>();
-
+            Player playerM = collision.GetComponent<Player>();
             if (player != null)
             {
-                player.TrippleShotPowerupOn();
+                
+                if (powerupID == 0)
+                {
+                    //enable trippleshot
+                    player.TrippleShotPowerupOn();
+                }
+                else if (powerupID == 1)
+                {
+                    //enable speed
+                    playerM.SpeedPowerupOn();
+                }
+                else if (powerupID == 2)
+                {   
+                    //enable shield
+
+                }
             }
 
 
@@ -37,4 +53,7 @@ public class PowerUp : MonoBehaviour {
         }
      
     }
+
+    //3 powerup setups
+    //check name of object to activate relevant powerup
 }

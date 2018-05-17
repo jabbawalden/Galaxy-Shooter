@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PShoot : MonoBehaviour {
 
-    
-
     [SerializeField]
     private float _laserSpeed;
 
@@ -37,27 +35,6 @@ public class PShoot : MonoBehaviour {
         //TrippleShotUpgrade();
 
     }
-
-    //private void TrippleShotUpgrade ()
-    //{
-    //    if (trippleShotUpgrade)
-    //    {
-    //        _trippleSetTime --;
-            
-    //        if (_trippleSetTime <= 0)
-    //        {
-    //            trippleShotUpgrade = false;
-    //        }
-    //    }
-
-    //    if (!trippleShotUpgrade)
-    //    {
-    //        _trippleSetTime = 500;
-            
-    //    }
-
-
-    //}
 
     private void PlayerInput ()
     {

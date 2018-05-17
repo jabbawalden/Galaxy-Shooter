@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     private float _speed = 5;
+
+    public bool SpeedPowerUp = false;
   
 	// Use this for initialization
 	private void Start ()
@@ -25,6 +27,7 @@ public class Player : MonoBehaviour {
 
         AlternativeMovement();
         PlayerBounds();
+        SpeedControl();
     }
 
     private void AlternativeMovement ()
@@ -37,6 +40,18 @@ public class Player : MonoBehaviour {
         transform.Translate(Vector3.right * deltaPosition * h);
         transform.Translate(Vector3.up * deltaPosition * v);
     } 
+
+    private void SpeedControl()
+    {
+        if (SpeedPowerUp)
+        {
+            _speed = 8;
+        }
+        else
+        {
+            _speed = 5;
+        }
+    }
 
     private void PlayerBounds ()
     {
@@ -64,7 +79,17 @@ public class Player : MonoBehaviour {
 
     }
 
-    
+    public void SpeedPowerupOn()
+    {
+        SpeedPowerUp = true; 
+        StartCoroutine(SpeedPowerupTimer()); 
+    }
 
-    
+    public IEnumerator SpeedPowerupTimer()
+    {
+        yield return new WaitForSeconds(5.0f);
+        SpeedPowerUp = false;
+    }
+
+
 }
