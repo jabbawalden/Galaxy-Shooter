@@ -10,12 +10,15 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private float _speed = 5;
 
+    public int health;
+
     public bool SpeedPowerUp = false;
   
 	// Use this for initialization
 	private void Start ()
     {
         transform.position = new Vector3(0, 0, 0);
+        health = 3;
 	}
 	
 	// Update is called once per frame
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour {
         AlternativeMovement();
         PlayerBounds();
         SpeedControl();
+      
     }
 
     private void AlternativeMovement ()
@@ -89,6 +93,25 @@ public class Player : MonoBehaviour {
     {
         yield return new WaitForSeconds(5.0f);
         SpeedPowerUp = false;
+    }
+
+    public void PlayerDamage()
+    {
+        health--;
+
+        if (health < 1)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            PlayerDamage();
+        }
+        
     }
 
 
