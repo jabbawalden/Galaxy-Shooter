@@ -9,16 +9,25 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     private float _speed = 5;
+    [SerializeField]
+    private GameObject _explosion;
+    [SerializeField]
+    private int _shieldHits;
+    [SerializeField]
+    private GameObject _shield;
 
     public int health;
 
     public bool SpeedPowerUp = false;
+    public bool shieldsActive = false;
   
 	// Use this for initialization
 	private void Start ()
     {
         transform.position = new Vector3(0, 0, 0);
         health = 3;
+        _shieldHits = 3;
+        _shield.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -95,14 +104,40 @@ public class Player : MonoBehaviour {
         SpeedPowerUp = false;
     }
 
+    public void EnableShields()
+    {
+        shieldsActive = true;
+        _shield.SetActive(true);
+    }
+
     public void PlayerDamage()
     {
-        health--;
-
-        if (health < 1)
+        if (shieldsActive)
         {
-            Destroy(this.gameObject);
+            
+            _shieldHits--;
+
+            if (_shieldHits <= 0)
+            {
+                _shield.SetActive(false);
+                shieldsActive = false;
+                _shieldHits = 3;
+                return;
+            }
+            
+
         }
+        else if (!shieldsActive)
+        {
+            health--;
+
+            if (health <= 0)
+            {
+                Instantiate(_explosion, transform.position, Quaternion.identity);
+                Destroy(this.gameObject);
+            }
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
