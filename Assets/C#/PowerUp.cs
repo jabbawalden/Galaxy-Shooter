@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUp : MonoBehaviour {
+public class PowerUp : MonoBehaviour
+{
 
     [SerializeField]
     float speed;
@@ -61,9 +62,7 @@ public class PowerUp : MonoBehaviour {
                 }
             }
 
-
             DestroyObject();
-
         }
      
     }

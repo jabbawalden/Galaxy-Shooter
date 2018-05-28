@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     [SerializeField]
     Rigidbody2D rb;
@@ -18,9 +19,13 @@ public class Player : MonoBehaviour {
 
     public int health;
 
+
     public bool SpeedPowerUp = false;
     public bool shieldsActive = false;
-  
+    private UIManager _uIManager;
+    private GameControl _gameControl;
+    private SpawnManager _spawnManager;
+
 	// Use this for initialization
 	private void Start ()
     {
@@ -28,7 +33,23 @@ public class Player : MonoBehaviour {
         health = 3;
         _shieldHits = 3;
         _shield.SetActive(false);
-	}
+        
+
+        _uIManager = GameObject.Find("UI").GetComponent<UIManager>();
+        _gameControl = GameObject.Find("GameManager").GetComponent<GameControl>();
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+
+        if (_uIManager != null)
+        {
+            _uIManager.UpdateLives(health);
+        }
+
+        if (_spawnManager != null)
+        {
+            _spawnManager.StartSpawn();
+        }
+        
+    }
 	
 	// Update is called once per frame
 	private void Update ()
@@ -40,7 +61,7 @@ public class Player : MonoBehaviour {
         AlternativeMovement();
         PlayerBounds();
         SpeedControl();
-      
+        
     }
 
     private void AlternativeMovement ()
@@ -53,6 +74,14 @@ public class Player : MonoBehaviour {
         transform.Translate(Vector3.right * deltaPosition * h);
         transform.Translate(Vector3.up * deltaPosition * v);
     } 
+
+    private void HealthCheck()
+    {
+        if (health == 0)
+        {
+            _gameControl.gameOver = true;
+        }
+    }
 
     private void SpeedControl()
     {
@@ -130,13 +159,18 @@ public class Player : MonoBehaviour {
         else if (!shieldsActive)
         {
             health--;
+            _uIManager.UpdateLives(health);
 
             if (health <= 0)
             {
                 Instantiate(_explosion, transform.position, Quaternion.identity);
-                Destroy(this.gameObject);
+                _gameControl.gameOver = true;
+                Destroy(this.gameObject);  
             }
+
         }
+
+        
         
     }
 

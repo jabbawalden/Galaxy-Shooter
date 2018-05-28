@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : MonoBehaviour
+{
 
     [SerializeField]
     private float _speed;
     [SerializeField]
     private GameObject _enemyExplosion;
-    
 
-	// Use this for initialization
-	void Start ()
+    private UIManager _uIManager;
+    private SpawnManager _spawnManager;
+
+    // Use this for initialization
+    void Start ()
     {
-        _speed = 2;
-	}
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _speed = _spawnManager.globalEnemySpeed;
+        _uIManager = GameObject.Find("UI").GetComponent<UIManager>();
+    
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -30,11 +36,11 @@ public class EnemyAI : MonoBehaviour {
 
     private void EnemyReposition()
     {
-        float randomX = Random.Range(-7.5f, 7.5f);
         if (transform.position.y <= -6)
         {
             //between 7 and 7 on the x
-            transform.position = new Vector3(randomX, 7, transform.position.z);
+            //transform.position = new Vector3(randomX, 7, transform.position.z);
+            Destroy(this.gameObject);
         }
     }
 
@@ -42,21 +48,32 @@ public class EnemyAI : MonoBehaviour {
     public void EnemyDestruction()
     {
         GameObject explosion = Instantiate(_enemyExplosion, transform.position, Quaternion.identity);
-
         Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.tag == "PlayerLaser")
         {
             EnemyDestruction();
             Destroy(collision.gameObject);
+
+            if (_uIManager != null)
+            {
+                _uIManager.UpdateScore();
+            }
+           
         }
 
         if (collision.tag == "Player")
-        {
+        {  
             EnemyDestruction();
+
+            if (_uIManager != null)
+            {
+                _uIManager.UpdateScore();
+            }
         }
     }
 }
