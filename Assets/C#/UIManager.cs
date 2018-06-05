@@ -8,7 +8,9 @@ public class UIManager : MonoBehaviour
     public Sprite[] lives;
     public Image lifeImage;
     public int score;
+    public int maxScore;
     public Text scoreText;
+    public Text maxScoreText;
 
     //objects UI
     [SerializeField]
@@ -16,12 +18,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _score;
     [SerializeField]
-    private GameObject _titleScreen;
+    private GameObject _titleScreen, _maxScore;
+    private GameControl gameControl;
 
     private void Start()
     {
         score = 0;
+        gameControl = GameObject.Find("GameManager").GetComponent<GameControl>();
     }
+
 
     public void UpdateLives(int currentLives)
     {
@@ -31,10 +36,23 @@ public class UIManager : MonoBehaviour
     public void UpdateScore()
     {
         score += 10;
-
-        scoreText.text = "Score: " + score;
         
+        scoreText.text = "Score: " + score;
+
+        if (maxScore < score)
+        {
+            maxScore = score;
+            maxScoreText.text = "Max Score: " + maxScore;
+        }
+
     }
+
+    public void DeductScore()
+    {
+        score -= 10;
+        scoreText.text = "Score: " + score;
+    }
+
 
     public void ShowUI()
     {

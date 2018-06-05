@@ -21,11 +21,16 @@ public class PShoot : MonoBehaviour {
     [SerializeField]
     private float _trippleSetTime;
 
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private AudioClip _laser;
+
     // Use this for initialization
     private void Start ()
     {
         _laserSpeed = 13;
-		
+        _audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -60,7 +65,8 @@ public class PShoot : MonoBehaviour {
             //spawn laserCopy
             _nextFire = Time.time + _fireRate;
 
-            
+            _audioSource.Play();
+
             if (trippleShotUpgrade)
             {
                 GameObject TrippleShot = Instantiate(_tripplShotSpawn, transform.position, Quaternion.identity);

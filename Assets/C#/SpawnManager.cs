@@ -9,7 +9,6 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyship;
     [SerializeField]
     private GameObject[] _powerups;
-
     private GameControl _gameControl;
     // 0 = tripple, 1 = speed, 2 = shield
 
@@ -19,17 +18,10 @@ public class SpawnManager : MonoBehaviour
 
     // Use this for initialization
     void Start ()
-    {
-        
-
+    { 
         _gameControl = GameObject.Find("GameManager").GetComponent<GameControl>();
     }
 
-	// Update is called once per frame
-	void Update ()
-    {
-       //if enemy count = enemy count + 10. enemyTime /= 0.8f;
-	}
 
     private void SpawnEnemy()
     {
@@ -43,7 +35,8 @@ public class SpawnManager : MonoBehaviour
     {
         while (_gameControl.gameOver == false)
         {
-           SpawnEnemy();
+            SpawnEnemy();
+            print("spawnEnemySuccess");
             yield return new WaitForSeconds(enemyTime);
         }
     }
@@ -62,29 +55,37 @@ public class SpawnManager : MonoBehaviour
         while (_gameControl.gameOver == false)
         {
             PowerUpSpawn();
-            yield return new WaitForSeconds(powerUpTime);
+            print("spawnPowerUpSuccess");
+            yield return new WaitForSeconds(powerUpTime);  
         }
     }
 
     public IEnumerator TimeSpawnSpeedUp()
     {
-        while (true)
-        {
+        while (_gameControl.gameOver == false)
+        {   
             yield return new WaitForSeconds(10);
             enemyTime /= 1.1f;
             powerUpTime /= 1.05f;
-            globalEnemySpeed /= 0.98f;
+            globalEnemySpeed /= 1.005f;
+            
         }
         
     }
 
     public void StartSpawn()
     {
-        globalEnemySpeed = 2;
+        globalEnemySpeed = 2.5f;
         enemyTime = 2;
         powerUpTime = 8;
         StartCoroutine(EnemySpawnTimer());
         StartCoroutine(PowerUpSpawnTimer());
         StartCoroutine(TimeSpawnSpeedUp());
+        
+    }
+
+    public void StopSpawn()
+    {
+        StopAllCoroutines();
     }
 }

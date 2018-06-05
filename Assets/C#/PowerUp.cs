@@ -9,18 +9,25 @@ public class PowerUp : MonoBehaviour
     float speed;
     [SerializeField]
     private int powerupID; //0 = Tripple, 1 = speed boost, 2 = shield
-
-	// Use this for initialization
-	void Start ()
+    private GameControl _gameControl;
+    [SerializeField]
+    private AudioClip _audioPowerUp;
+    // Use this for initialization
+    void Start ()
     {
-		
-	}
+        _gameControl = GameObject.Find("GameManager").GetComponent<GameControl>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
         Boundaries();
+
+        if (_gameControl.gameOver)
+        {
+            DestroyObject();
+        }
 	}
 
     private void Boundaries()
@@ -44,7 +51,8 @@ public class PowerUp : MonoBehaviour
             Player playerM = collision.GetComponent<Player>();
             if (player != null)
             {
-                
+                AudioSource.PlayClipAtPoint(_audioPowerUp, Camera.main.transform.position);
+
                 if (powerupID == 0)
                 {
                     //enable trippleshot

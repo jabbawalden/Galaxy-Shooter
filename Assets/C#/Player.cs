@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     private GameControl _gameControl;
     private SpawnManager _spawnManager;
 
+
 	// Use this for initialization
 	private void Start ()
     {
@@ -48,20 +49,15 @@ public class Player : MonoBehaviour
         {
             _spawnManager.StartSpawn();
         }
-        
+
     }
 	
 	// Update is called once per frame
 	private void Update ()
     {
-
-        //calls input
-        // PInput();
-
         AlternativeMovement();
         PlayerBounds();
         SpeedControl();
-        
     }
 
     private void AlternativeMovement ()
@@ -165,6 +161,7 @@ public class Player : MonoBehaviour
             {
                 Instantiate(_explosion, transform.position, Quaternion.identity);
                 _gameControl.gameOver = true;
+                _spawnManager.StopSpawn();
                 Destroy(this.gameObject);  
             }
 

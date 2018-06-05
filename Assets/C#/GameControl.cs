@@ -16,12 +16,14 @@ public class GameControl : MonoBehaviour {
     {
         gameOver = true;
         _uiManager = GameObject.Find("UI").GetComponent<UIManager>();
+
     }
     // Update is called once per frame
     void Update ()
     {
         PlayerInput();
         GameState();
+        
     }
 
     private void PlayerInput()
@@ -29,6 +31,7 @@ public class GameControl : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) && gameOver)
         {
             Instantiate(_player, transform.position, Quaternion.identity);
+            
             gameOver = false;
         }
 

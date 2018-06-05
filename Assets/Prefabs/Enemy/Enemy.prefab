@@ -102,6 +102,11 @@ MonoBehaviour:
   _speed: 0
   _enemyExplosion: {fileID: 1677135992854252, guid: 12d91a267546d3b458dff2227014bd42,
     type: 2}
+  _explosion:
+  - {fileID: 8300000, guid: cade0e2389651ae4082739f29c471016, type: 3}
+  - {fileID: 8300000, guid: aad4b243ea41a904a9d6c83e240bd105, type: 3}
+  - {fileID: 8300000, guid: 573c4a2d6f915c14dbde0ad45a08f7a1, type: 3}
+  _output: {fileID: 243279870724449782, guid: 47b8a87e7cbf582448912bb1b06c5bd2, type: 2}
 --- !u!212 &212339750501833864
 SpriteRenderer:
   m_ObjectHideFlags: 1
