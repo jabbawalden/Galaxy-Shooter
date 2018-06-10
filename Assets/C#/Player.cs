@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
 
     public int health;
 
+    [SerializeField] private GameObject[] _damageAnimation;
+    private int _hitcount;
 
     public bool SpeedPowerUp = false;
     public bool shieldsActive = false;
@@ -34,7 +36,8 @@ public class Player : MonoBehaviour
         health = 3;
         _shieldHits = 3;
         _shield.SetActive(false);
-        
+        _damageAnimation[0].SetActive(false);
+        _damageAnimation[1].SetActive(false);
 
         _uIManager = GameObject.Find("UI").GetComponent<UIManager>();
         _gameControl = GameObject.Find("GameManager").GetComponent<GameControl>();
@@ -154,6 +157,21 @@ public class Player : MonoBehaviour
         }
         else if (!shieldsActive)
         {
+            //set random engine to true each hit
+            //int r = Random.Range(0, 2);
+
+            _hitcount++;
+
+            if (_hitcount == 1)
+            {
+                _damageAnimation[0].SetActive(true);
+            }
+            else if (_hitcount == 2)
+            {
+                _damageAnimation[1].SetActive(true);
+            }
+
+            //reduce health, and update UI according to health amount
             health--;
             _uIManager.UpdateLives(health);
 
@@ -165,9 +183,7 @@ public class Player : MonoBehaviour
                 Destroy(this.gameObject);  
             }
 
-        }
-
-        
+        }   
         
     }
 
